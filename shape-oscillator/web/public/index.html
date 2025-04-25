@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="icon" href="data:," />
+    <title>Image Oscillator</title>
+
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <video id="video" style="display: none"></video>
+
+    <main>
+      <section id="display">
+        <canvas class="canvas" id="canvas-graph-x"></canvas>
+        <canvas class="canvas" id="canvas-graph-xy"></canvas>
+        <canvas class="canvas" id="canvas-graph-y"></canvas>
+      </section>
+      <section id="controls">
+        <input type="radio" name="mode" value="shape" checked />shape
+        <input type="radio" name="mode" value="camera" />camera
+        <br />
+        <label desc="s1_poly"></label>
+        <input id="s1_poly" type="range" value="4" min="2" max="16" step="1" />
+        <label desc="s1_freq"></label>
+        <input id="s1_freq" type="range" value="30" min="1" max="40" step="1" />
+        <label desc="s1_rotate"></label>
+        <input
+          id="s1_rotate"
+          type="range"
+          value="0"
+          min="0"
+          max="6.28"
+          step="0.01"
+        />
+        <br />
+        <label desc="s2_poly"></label>
+        <input id="s2_poly" type="range" value="24" min="2" max="32" step="1" />
+        <label desc="s2_freq"></label>
+        <input id="s2_freq" type="range" value="30" min="1" max="40" step="1" />
+        <label desc="s2_rotate"></label>
+        <input
+          id="s2_rotate"
+          type="range"
+          value="3.14"
+          min="0"
+          max="6.28"
+          step="0.01"
+        />
+        <br />
+        <label desc="s_progress"></label>
+        <input
+          id="s_progress"
+          type="range"
+          value="0"
+          min="0"
+          max="1"
+          step="0.01"
+        />
+        <label desc="s_offset"></label>
+        <input
+          id="s_offset"
+          type="range"
+          value="0"
+          value="0"
+          min="0"
+          max="360"
+          step="1"
+        />
+        <br />
+        <label desc="a"></label>
+        <input id="a" type="range" value="1" min="1" max="20" step="0.1" />
+        <label desc="b"></label>
+        <input id="b" type="range" value="1" min="1" max="20" step="0.1" />
+        <br />
+        <label desc="minLines"></label>
+        <input
+          id="minLines"
+          type="range"
+          value="10"
+          min="0"
+          max="500"
+          step="1"
+        />
+        <label desc="maxLines"></label>
+        <input
+          id="maxLines"
+          type="range"
+          value="300"
+          min="0"
+          max="500"
+          step="1"
+        />
+        <label desc="contourMode"></label>
+        <input
+          id="contourMode"
+          type="range"
+          value="1"
+          min="1"
+          max="4"
+          step="1"
+        />
+        <br />
+        <label desc="cvThreshA"></label>
+        <input
+          id="cvThreshA"
+          type="range"
+          value="150"
+          min="0"
+          max="1000"
+          step="1"
+        />
+        <label desc="cvThreshB"></label>
+        <input
+          id="cvThreshB"
+          type="range"
+          value="800"
+          min="0"
+          max="1000"
+          step="1"
+        />
+        <br />
+        <label desc="cvCannyA"></label>
+        <input
+          id="cvCannyA"
+          type="range"
+          value="200"
+          min="0"
+          max="1000"
+          step="1"
+        />
+        <label desc="cvCannyB"></label>
+        <input
+          id="cvCannyB"
+          type="range"
+          value="500"
+          min="0"
+          max="1000"
+          step="1"
+        />
+        <label desc="cvCannyC"></label>
+        <input id="cvCannyC" type="range" value="3" min="3" max="10" step="1" />
+      </section>
+    </main>
+
+    <script async src="index.js"></script>
+    <script
+      async
+      src="opencv.js"
+      onload="cameraOscillator.onOpenCvReady();"
+    ></script>
+  </body>
+</html>
