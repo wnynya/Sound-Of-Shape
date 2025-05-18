@@ -1,6 +1,6 @@
-import EventEmitter from 'events';
+import EventEmitter from 'node:events';
+import crypto from 'node:crypto';
 import { WebSocketServer as WSS } from 'ws';
-import { v4 as uuidv4 } from 'uuid';
 
 class WebSocketServer extends EventEmitter {
   constructor(options = {}) {
@@ -47,7 +47,7 @@ class WebSocketServer extends EventEmitter {
 
     this.upgrade = (req, socket, head) => {
       this.server.handleUpgrade(req, socket, head, (con) => {
-        con.uuid = uuidv4();
+        con.id = crypto.randomUUID();
         con.req = req;
         this.addMethods(con);
         this.addEventListener(con);
@@ -67,12 +67,15 @@ class WebSocketServer extends EventEmitter {
     });
 
     con.addEventListener('message', (read) => {
+      this.emit('message', con, read);
+
       const text = read.data;
       if (text === 'PING') {
         return;
       }
       try {
         const object = JSON.parse(text);
+        con.emit(object.event, object.data, object.message);
         this.emit('json', con, object.event, object.data, object.message);
         this.emit('text', con, text);
       } catch (error) {
@@ -91,21 +94,20 @@ class WebSocketServer extends EventEmitter {
     });
   }
 
-  addMethods(connection) {
-    connection.init = (data = {}) => {
-      connection.send(
+  addMethods(con) {
+    con.events = new EventEmitter();
+    con.on = con.events.on;
+
+    con.init = (data = {}) => {
+      con.send(
         JSON.stringify({ event: 'init', message: 'Initialization', data: data })
       );
     };
-    connection.event = (event, data = {}, message = event) => {
-      connection.send(
-        JSON.stringify({ event: event, message: message, data: data })
-      );
+    con.event = (event, data = {}, message = event) => {
+      con.send(JSON.stringify({ event: event, message: message, data: data }));
     };
-    connection.error = (message) => {
-      connection.send(
-        JSON.stringify({ event: 'error', message: message, data: {} })
-      );
+    con.error = (message) => {
+      con.send(JSON.stringify({ event: 'error', message: message, data: {} }));
     };
   }
 

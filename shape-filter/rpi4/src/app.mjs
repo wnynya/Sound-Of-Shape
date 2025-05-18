@@ -14,6 +14,11 @@ for (let i = 0; i < process.argv.length; i++) {
   }
 }
 
-http.createServer(express).listen(port, () => {
-  console.log(`Server start on port ${port}.`);
-});
+import websocket from './websocket.mjs';
+
+http
+  .createServer(express)
+  .listen(port, () => {
+    console.log(`Server start on port ${port}.`);
+  })
+  .on('upgrade', websocket);
