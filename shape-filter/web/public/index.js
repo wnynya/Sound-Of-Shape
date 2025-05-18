@@ -489,6 +489,15 @@ class ShapeFilter {
     await this.cv_video.play();
   }
 
+  async setVideoFile(fileUrl) {
+    let tracks = this.cv_video.srcObject?.getTracks?.();
+    tracks?.forEach((track) => track.stop());
+
+    this.cv_video.srcObject = null; // 기존 스트림 제거
+    this.cv_video.src = fileUrl;
+    await this.cv_video.play();
+  }
+
   display(mat, canvas) {
     cv.imshow(canvas, mat);
   }
@@ -533,6 +542,7 @@ let audioOutput;
 let processor;
 
 async function init() {
+  await navigator.mediaDevices.getUserMedia({ audio: true, video: true });
   await navigator.permissions.query({ name: 'microphone' });
   await navigator.permissions.query({ name: 'camera' });
 
@@ -569,7 +579,7 @@ async function init() {
 }
 
 async function gesture(params) {
-  audioContext = new AudioContext({ sampleRate: 44100 });
+  audioContext = new AudioContext({ sampleRate: 48000 });
   await audioContext.audioWorklet.addModule('audio-input-processor.js');
   await audioContext.audioWorklet.addModule('audio-output-processor.js');
 
@@ -590,26 +600,28 @@ async function gesture(params) {
   initDisplay();
   addEventListener();
 
-  document.querySelector(
-    `#select-audio-input [value='dea1d5989bab653595458cd7d90894ca6c2d186dc18ce755f2ecdbab69ff82c6']`
-  ).selected = true;
   document
     .querySelector(`#select-audio-input`)
     .dispatchEvent(new Event('change'));
 
-  document.querySelector(
-    `#select-video-input [value='d647d5c961f4f6f0a8423f641f6a5b2627d2485a62aa8a251bd84cf90d486c33']`
-  ).selected = true;
   document
     .querySelector(`#select-video-input`)
     .dispatchEvent(new Event('change'));
 
-  document.querySelector(
-    `#select-audio-output [value='b46426576dcb878a3d1709f1622bfadb1adb244e9991f8cb22d67ba3c7b0991e']`
-  ).selected = true;
   document
     .querySelector(`#select-audio-output`)
     .dispatchEvent(new Event('change'));
+
+  return;
+  document.querySelector(
+    `#select-audio-input [value='dea1d5989bab653595458cd7d90894ca6c2d186dc18ce755f2ecdbab69ff82c6']`
+  ).selected = true;
+  document.querySelector(
+    `#select-video-input [value='d647d5c961f4f6f0a8423f641f6a5b2627d2485a62aa8a251bd84cf90d486c33']`
+  ).selected = true;
+  document.querySelector(
+    `#select-audio-output [value='b46426576dcb878a3d1709f1622bfadb1adb244e9991f8cb22d67ba3c7b0991e']`
+  ).selected = true;
 }
 
 class Display {

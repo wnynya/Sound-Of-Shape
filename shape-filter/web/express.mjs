@@ -9,4 +9,8 @@ const app = express();
 
 app.use(express.static(path.resolve(__dirname, './public')));
 
+app.get('/sans', (req, res) => {
+  res.status(400 + Math.floor(Math.random() * 100)).end();
+});
+
 export default app;

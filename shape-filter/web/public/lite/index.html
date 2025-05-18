@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="icon" href="data:," />
+    <title>Shape Filter</title>
+
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <section class="devdisplay">
+      <div class="view">
+        <label>video</label>
+        <canvas id="canvas-video"></canvas>
+      </div>
+      <div class="view">
+        <label>gray</label>
+        <canvas id="canvas-gray"></canvas>
+      </div>
+      <div class="view">
+        <label>blur</label>
+        <canvas id="canvas-blur"></canvas>
+      </div>
+      <div class="view">
+        <label>tresh</label>
+        <canvas id="canvas-tresh"></canvas>
+      </div>
+      <div class="view">
+        <label>morph</label>
+        <canvas id="canvas-morph"></canvas>
+      </div>
+      <div class="view">
+        <label>cont</label>
+        <canvas id="canvas-cont"></canvas>
+      </div>
+      <div class="view">
+        <label>contl</label>
+        <canvas id="canvas-contl"></canvas>
+      </div>
+      <div class="view">
+        <label>mask</label>
+        <canvas id="canvas-mask"></canvas>
+      </div>
+      <div class="view">
+        <label>closed</label>
+        <canvas id="canvas-closed"></canvas>
+      </div>
+      <div class="view">
+        <label>cont2</label>
+        <canvas id="canvas-cont2"></canvas>
+      </div>
+    </section>
+
+    <section class="devdisplay">
+      <div class="view">
+        <label>X</label>
+        <canvas id="canvas-graph-x"></canvas>
+      </div>
+      <div class="view">
+        <label>XY</label>
+        <canvas id="canvas-graph-xy"></canvas>
+      </div>
+      <div class="view">
+        <label>Y</label>
+        <canvas id="canvas-graph-y"></canvas>
+      </div>
+    </section>
+
+    <section id="controls">
+      <div class="select">
+        <select id="select-audio-input"></select>
+        <select id="select-video-input"></select>
+        <select id="select-audio-output"></select>
+      </div>
+      <div class="set">
+        <label desc="input_gain"></label>
+        <input
+          id="input_gain"
+          type="range"
+          value="1.0"
+          min="0"
+          max="2"
+          step="0.01"
+        />
+      </div>
+      <div class="set">
+        <label desc="output_gain"></label>
+        <input
+          id="output_gain"
+          type="range"
+          value="0.5"
+          min="0"
+          max="2"
+          step="0.01"
+        />
+      </div>
+      <div class="set">
+        <label desc="freq"></label>
+        <input
+          id="freq"
+          type="range"
+          value="3"
+          min="0.01"
+          max="80"
+          step="0.01"
+        />
+      </div>
+      <div class="set">
+        <label desc="mix"></label>
+        <input id="mix" type="range" value="0.1" min="0" max="2" step="0.01" />
+      </div>
+      <div class="set">
+        <label desc="cv_tresh_a"></label>
+        <input
+          id="cv_tresh_a"
+          type="range"
+          value="150"
+          min="0"
+          max="1000"
+          step="10"
+        />
+      </div>
+      <div class="set">
+        <label desc="cv_tresh_b"></label>
+        <input
+          id="cv_tresh_b"
+          type="range"
+          value="800"
+          min="0"
+          max="1000"
+          step="10"
+        />
+      </div>
+      <div class="set">
+        <label desc="cv_tresh_invert"></label>
+        <input
+          id="cv_tresh_invert"
+          type="range"
+          value="0"
+          min="0"
+          max="1"
+          step="1"
+        />
+      </div>
+      <div class="set">
+        <label desc="cv_morphsize"></label>
+        <input
+          id="cv_morphsize"
+          type="range"
+          value="5"
+          min="0"
+          max="20"
+          step="1"
+        />
+      </div>
+      <div class="set">
+        <label desc="cv_compmin"></label>
+        <input
+          id="cv_compmin"
+          type="range"
+          value="100"
+          min="0"
+          max="1000"
+          step="1"
+        />
+      </div>
+      <div class="set">
+        <label desc="cv_approxpoly"></label>
+        <input
+          id="cv_approxpoly"
+          type="range"
+          value="1"
+          min="0.001"
+          max="50"
+          step="0.001"
+        />
+      </div>
+    </section>
+
+    <script async src="index.js"></script>
+    <script async src="opencv.js" onload="processor?.onOpenCvReady();"></script>
+  </body>
+</html>
