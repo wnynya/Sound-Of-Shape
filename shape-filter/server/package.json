@@ -1,0 +1,24 @@
+{
+  "name": "rpi",
+  "version": "1.0.0",
+  "main": "src/app.mjs",
+  "scripts": {
+    "dev": "nodemon src/app.mjs -p 2980"
+  },
+  "author": "Sungwan Jo",
+  "description": "",
+  "dependencies": {
+    "express": "^5.1.0",
+    "serialport": "^13.0.0",
+    "ws": "^8.18.2"
+  },
+  "nodemonConfig": {
+    "watch": [
+      "*"
+    ],
+    "ignore": [
+      "./src/public"
+    ],
+    "ext": "js,mjs,json,html,css,txt"
+  }
+}
